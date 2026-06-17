@@ -39,7 +39,9 @@ def calculate_collection_summary(dataframe: pd.DataFrame) -> dict:
     ).dropna()
 
     if tempo_mcu.empty:
-        raise ValueError("A coluna tempo_mcu não possui valores válidos.")
+        raise ValueError(
+            "A coluna tempo_mcu não possui valores válidos."
+        )
 
     if tempo_vetorizado.empty:
         raise ValueError(
@@ -48,7 +50,7 @@ def calculate_collection_summary(dataframe: pd.DataFrame) -> dict:
 
     if angulo_joelho.empty:
         raise ValueError(
-            "A coluna angulo_joelho não possui valores válidos."
+            "A coluna angulo_joelho_graus não possui valores válidos."
         )
 
     duracao_mcu = float(tempo_mcu.max() - tempo_mcu.min())
@@ -63,13 +65,21 @@ def calculate_collection_summary(dataframe: pd.DataFrame) -> dict:
         else 0
     )
 
+    angulo_minimo = float(angulo_joelho.min())
+    angulo_maximo = float(angulo_joelho.max())
+    angulo_medio = float(angulo_joelho.mean())
+    angulo_amplitude = angulo_maximo - angulo_minimo
+    angulo_desvio_padrao = float(angulo_joelho.std())
+
     return {
         "duracao_mcu_s": round(duracao_mcu, 3),
         "duracao_vetorizada_s": round(duracao_vetorizada, 3),
         "cobertura_percentual": round(cobertura_percentual, 2),
         "angulo_joelho": {
-            "minimo": round(float(angulo_joelho.min()), 3),
-            "maximo": round(float(angulo_joelho.max()), 3),
-            "media": round(float(angulo_joelho.mean()), 3),
+            "minimo": round(angulo_minimo, 3),
+            "maximo": round(angulo_maximo, 3),
+            "media": round(angulo_medio, 3),
+            "amplitude": round(angulo_amplitude, 3),
+            "desvio_padrao": round(angulo_desvio_padrao, 3),
         },
     }
