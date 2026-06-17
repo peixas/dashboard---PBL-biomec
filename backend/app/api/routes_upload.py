@@ -1,3 +1,4 @@
+from app.services.collection_summary import calculate_collection_summary
 from io import BytesIO
 
 import pandas as pd
@@ -28,6 +29,7 @@ async def upload_csv(file: UploadFile = File(...)):
             )
 
         dataframe = pd.read_csv(BytesIO(content))
+        summary = calculate_collection_summary(dataframe)
 
         return {
             "message": "Arquivo recebido com sucesso.",
@@ -35,6 +37,7 @@ async def upload_csv(file: UploadFile = File(...)):
             "rows": len(dataframe),
             "columns_count": len(dataframe.columns),
             "columns": dataframe.columns.tolist(),
+            "summary": summary,
         }
 
     except HTTPException:
