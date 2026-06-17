@@ -216,3 +216,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ambientes virtuais
+.venv/
+backend/.venv/
+
+# Arquivos Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Variáveis de ambiente
+.env
+
+# macOS
+.DS_Store
