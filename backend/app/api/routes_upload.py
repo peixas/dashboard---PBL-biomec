@@ -1,5 +1,5 @@
 from io import BytesIO
-
+from app.services.time_series import build_time_series
 import pandas as pd
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
@@ -49,6 +49,7 @@ async def upload_csv(file: UploadFile = File(...)):
 
         # Calcula as métricas de jerk da coxa e da perna
         jerk_summary = calculate_jerk_summary(dataframe)
+        time_series = build_time_series(dataframe)
 
         return {
             "message": "Arquivo recebido e analisado com sucesso.",
@@ -58,6 +59,7 @@ async def upload_csv(file: UploadFile = File(...)):
             "columns": dataframe.columns.tolist(),
             "summary": collection_summary,
             "jerk_summary": jerk_summary,
+            "time_series": time_series,
         }
 
     except HTTPException:
