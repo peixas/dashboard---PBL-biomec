@@ -2,7 +2,7 @@ from io import BytesIO
 from app.services.time_series import build_time_series
 import pandas as pd
 from fastapi import APIRouter, File, HTTPException, UploadFile
-
+from app.services.start_end_comparison import calculate_start_end_comparison
 from app.services.collection_summary import calculate_collection_summary
 from app.services.jerk_summary import calculate_jerk_summary
 
@@ -50,6 +50,7 @@ async def upload_csv(file: UploadFile = File(...)):
         # Calcula as métricas de jerk da coxa e da perna
         jerk_summary = calculate_jerk_summary(dataframe)
         time_series = build_time_series(dataframe)
+        start_end_comparison = calculate_start_end_comparison(dataframe)
 
         return {
             "message": "Arquivo recebido e analisado com sucesso.",
@@ -60,6 +61,7 @@ async def upload_csv(file: UploadFile = File(...)):
             "summary": collection_summary,
             "jerk_summary": jerk_summary,
             "time_series": time_series,
+            "start_end_comparison": start_end_comparison,
         }
 
     except HTTPException:
