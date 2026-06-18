@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useDashboard } from "../context/DashboardContext";
 import {
@@ -242,7 +243,74 @@ function classeDaVariacao(valor) {
     : "variation-decrease";
 }
 
+function interpretarRPE(valor) {
+  const rpe = Number(valor);
+
+  if (Number.isNaN(rpe)) {
+    return {
+      classificacao: "Não informado",
+      descricao:
+        "Informe a percepção subjetiva de esforço do atleta para complementar a análise biomecânica.",
+      classe: "rpe-empty",
+    };
+  }
+
+  if (rpe <= 2) {
+    return {
+      classificacao: "Esforço muito baixo",
+      descricao:
+        "O atleta relatou pouca percepção de esforço ao final da coleta.",
+      classe: "rpe-low",
+    };
+  }
+
+  if (rpe <= 4) {
+    return {
+      classificacao: "Esforço leve a moderado",
+      descricao:
+        "O atleta relatou esforço controlado, com baixa a moderada percepção de fadiga.",
+      classe: "rpe-light",
+    };
+  }
+
+  if (rpe <= 6) {
+    return {
+      classificacao: "Esforço moderado",
+      descricao:
+        "O atleta relatou esforço perceptível, que deve ser analisado em conjunto com os indicadores de movimento.",
+      classe: "rpe-moderate",
+    };
+  }
+
+  if (rpe <= 8) {
+    return {
+      classificacao: "Esforço elevado",
+      descricao:
+        "O atleta relatou alta percepção de esforço, sugerindo possível fadiga percebida ao final da coleta.",
+      classe: "rpe-high",
+    };
+  }
+
+  return {
+    classificacao: "Esforço máximo",
+    descricao:
+      "O atleta relatou esforço muito intenso. A interpretação deve considerar os dados biomecânicos e o contexto da coleta.",
+    classe: "rpe-maximum",
+  };
+}
+
 function RelatorioPage() {
+  const [rpeFadiga, setRpeFadiga] = useState("");
+  const interpretacaoRPE = interpretarRPE(rpeFadiga);
+  
+  useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto",
+  });
+}, []);
+
   const {
     resultado,
     resultadoComparacao,
@@ -742,7 +810,6 @@ function RelatorioPage() {
             </article>
           </div>
         </section>
-        
 
         {/* Gráficos detalhados */}
         <section className="charts-section">
@@ -1070,6 +1137,85 @@ function RelatorioPage() {
                 </ResponsiveContainer>
               </div>
             </article>
+          </div>
+        </section>
+
+        <section className="report-section rpe-section">
+          <div className="rpe-section-header-card">
+            <div className="section-heading">
+              <div>
+                <span className="section-kicker">
+                  Fadiga percebida
+                </span>
+
+                <h2>Escala RPE de fadiga</h2>
+              </div>
+
+              <p>
+                Registro subjetivo do esforço percebido pelo atleta ao final da coleta.
+              </p>
+            </div>
+          </div>
+
+          <div className="rpe-panel">
+            <div className="rpe-scale-card">
+              <div className="rpe-scale-header">
+                <div>
+                  <span className="rpe-mini-label">
+                    RPE informado
+                  </span>
+
+                  <strong>
+                    {rpeFadiga === "" ? "--" : rpeFadiga}
+                    <small>/10</small>
+                  </strong>
+                </div>
+
+                <span className={`rpe-pill ${interpretacaoRPE.classe}`}>
+                  {interpretacaoRPE.classificacao}
+                </span>
+              </div>
+
+              <input
+                id="rpe-fadiga"
+                type="range"
+                min="0"
+                max="10"
+                step="1"
+                value={rpeFadiga === "" ? 0 : rpeFadiga}
+                onChange={(event) => setRpeFadiga(event.target.value)}
+                className="rpe-slider"
+              />
+
+              <div className="rpe-scale-numbers">
+                <span>0</span>
+                <span>2</span>
+                <span>4</span>
+                <span>6</span>
+                <span>8</span>
+                <span>10</span>
+              </div>
+
+              <p>
+                0 representa nenhum esforço e 10 representa esforço máximo.
+              </p>
+            </div>
+
+            <div className="rpe-interpretation-card">
+              <span className="rpe-mini-label">
+                Interpretação
+              </span>
+
+              <p>
+                {interpretacaoRPE.descricao}
+              </p>
+            </div>
+          </div>
+
+          <div className="rpe-note">
+            A escala RPE complementa os dados dos sensores, mas não deve ser
+            interpretada isoladamente. A análise deve considerar também jerk,
+            amplitude do joelho, variação angular e condições da coleta.
           </div>
         </section>
 

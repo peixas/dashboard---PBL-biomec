@@ -2667,3 +2667,471 @@ button {
     width: min(280px, 85%);
   }
 }
+.gait-cycle-section {
+  margin-top: 32px;
+}
+
+.chart-card-wide {
+  grid-column: 1 / -1;
+}
+
+.gait-cycle-chart-container {
+  height: 380px;
+}
+
+.rpe-section {
+  margin-top: 32px;
+}
+
+.rpe-card {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) 1.2fr;
+  gap: 22px;
+  padding: 26px;
+  border-radius: 26px;
+  background: rgba(15, 35, 58, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.rpe-input-area,
+.rpe-result {
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.42);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.rpe-input-area label {
+  display: block;
+  margin-bottom: 12px;
+  color: #e5e7eb;
+  font-weight: 800;
+}
+
+.rpe-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rpe-input-row input {
+  width: 120px;
+  padding: 14px 16px;
+  border: 1px solid rgba(125, 244, 239, 0.35);
+  border-radius: 16px;
+  background: rgba(8, 18, 32, 0.9);
+  color: #f8fafc;
+  font-size: 1.8rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.rpe-input-row span {
+  color: #cbd5e1;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.rpe-input-area p,
+.rpe-result p,
+.rpe-note {
+  color: rgba(226, 232, 240, 0.72);
+  line-height: 1.55;
+}
+
+.rpe-result-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: rgba(226, 232, 240, 0.65);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.rpe-result strong {
+  display: block;
+  margin-bottom: 12px;
+  color: #f8fafc;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.rpe-low {
+  border-top: 4px solid #7df4ef;
+}
+
+.rpe-light {
+  border-top: 4px solid #8ee6a8;
+}
+
+.rpe-moderate {
+  border-top: 4px solid #facc15;
+}
+
+.rpe-high {
+  border-top: 4px solid #fb923c;
+}
+
+.rpe-maximum {
+  border-top: 4px solid #f87171;
+}
+
+.rpe-empty {
+  border-top: 4px solid rgba(148, 163, 184, 0.7);
+}
+
+.rpe-note {
+  margin-top: 16px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.34);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+@media (max-width: 850px) {
+  .rpe-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rpe-section {
+  margin-top: 32px;
+}
+
+.rpe-panel {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.9fr) 1.1fr;
+  gap: 20px;
+  padding: 22px;
+  border-radius: 26px;
+  background: rgba(15, 35, 58, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.rpe-scale-card,
+.rpe-interpretation-card {
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(8, 18, 32, 0.64);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.rpe-scale-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.rpe-mini-label {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(226, 232, 240, 0.62);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.rpe-scale-header strong {
+  color: #f8fafc;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.rpe-scale-header strong small {
+  margin-left: 6px;
+  color: rgba(226, 232, 240, 0.62);
+  font-size: 1.25rem;
+}
+
+.rpe-pill {
+  max-width: 220px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #0f172a;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-align: center;
+  background: #cbd5e1;
+}
+
+.rpe-slider {
+  width: 100%;
+  accent-color: #7df4ef;
+  cursor: pointer;
+}
+
+.rpe-scale-numbers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: rgba(226, 232, 240, 0.58);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.rpe-scale-card p,
+.rpe-interpretation-card p,
+.rpe-note {
+  color: rgba(226, 232, 240, 0.74);
+  line-height: 1.55;
+}
+
+.rpe-interpretation-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rpe-interpretation-card p {
+  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+.rpe-note {
+  margin-top: 16px;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.32);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  text-align: center;
+}
+
+.rpe-low {
+  background: #7df4ef;
+}
+
+.rpe-light {
+  background: #8ee6a8;
+}
+
+.rpe-moderate {
+  background: #facc15;
+}
+
+.rpe-high {
+  background: #fb923c;
+}
+
+.rpe-maximum {
+  background: #f87171;
+}
+
+.rpe-empty {
+  background: #cbd5e1;
+}
+
+@media (max-width: 850px) {
+  .rpe-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .rpe-scale-header {
+    flex-direction: column;
+  }
+
+  .rpe-pill {
+    max-width: none;
+  }
+}
+
+.rpe-section-header-card {
+  padding: 28px 32px;
+  margin-bottom: 22px;
+  border-radius: 26px;
+  background: rgba(15, 35, 58, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.18);
+}
+
+.rpe-section-header-card .section-heading {
+  margin-bottom: 0;
+}
+
+.report-page {
+  background:
+    radial-gradient(circle at top left, rgba(125, 244, 239, 0.14), transparent 30%),
+    radial-gradient(circle at top right, rgba(248, 250, 252, 0.08), transparent 28%),
+    linear-gradient(180deg, #091524 0%, #0c1b2d 45%, #08111f 100%);
+}
+
+.report-page .dashboard-content {
+  gap: 36px;
+}
+
+.report-header {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(248, 250, 252, 0.96), rgba(219, 234, 254, 0.9)),
+    radial-gradient(circle at top right, rgba(125, 244, 239, 0.32), transparent 34%);
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.report-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-top: 6px solid #7df4ef;
+  pointer-events: none;
+}
+
+.report-header .dashboard-eyebrow {
+  color: #0f766e;
+}
+
+.report-header h1 {
+  color: #0f172a;
+}
+
+.report-header .dashboard-description {
+  color: #475569;
+}
+
+.report-header .secondary-button {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: rgba(15, 23, 42, 0.18);
+}
+
+.report-page .success-state,
+.report-page .dashboard-section,
+.report-page .charts-section,
+.report-page .comparison-section,
+.report-page .report-section {
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(248, 250, 252, 0.94), rgba(226, 232, 240, 0.88));
+  border: 1px solid rgba(226, 232, 240, 0.76);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+  color: #0f172a;
+}
+
+.report-page .section-kicker,
+.report-page .success-label,
+.report-page .dashboard-eyebrow {
+  color: #0f766e;
+}
+
+.report-page .section-heading h2,
+.report-page .section-title,
+.report-page .success-state h2 {
+  color: #0f172a;
+}
+
+.report-page .section-heading p,
+.report-page .charts-description,
+.report-page .comparison-description {
+  color: #475569;
+}
+
+.report-page .metadata-grid input,
+.report-page textarea {
+  background: rgba(255, 255, 255, 0.72);
+  color: #0f172a;
+  border-color: rgba(148, 163, 184, 0.45);
+}
+
+.report-page .input-group label {
+  color: #334155;
+}
+
+.report-page .collection-chip {
+  background: rgba(15, 23, 42, 0.06);
+  border-color: rgba(148, 163, 184, 0.34);
+}
+
+.report-page .collection-chip span {
+  color: #64748b;
+}
+
+.report-page .collection-chip strong {
+  color: #0f172a;
+}
+
+.report-page .main-indicator-card {
+  background: rgba(255, 255, 255, 0.76);
+  border-color: rgba(148, 163, 184, 0.36);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.1);
+}
+
+.report-page .main-indicator-card strong,
+.report-page .main-indicator-header span {
+  color: #0f172a;
+}
+
+.report-page .main-indicator-card p {
+  color: #64748b;
+}
+
+.report-page .chart-card {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(148, 163, 184, 0.34);
+}
+
+.report-page .chart-header h3 {
+  color: #0f172a;
+}
+
+.report-page .chart-header p {
+  color: #64748b;
+}
+.gait-cycle-header-card {
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  border-radius: 26px;
+  background: rgba(15, 35, 58, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.2);
+}
+
+.gait-cycle-header-card .section-heading {
+  margin-bottom: 0;
+}
+
+.gait-cycle-section {
+  margin-top: 32px;
+}
+
+.gait-cycle-header-card {
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  border-radius: 26px;
+  background: rgba(15, 35, 58, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.2);
+}
+
+.gait-cycle-header-card .section-heading {
+  margin-bottom: 0;
+}
+
+.gait-cycle-card {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 34px 26px;
+  overflow: visible;
+}
+
+.gait-cycle-chart-header {
+  margin-bottom: 18px;
+}
+
+.gait-cycle-chart-container {
+  width: 100%;
+  height: 420px;
+  overflow: visible;
+}
+
+.gait-cycle-card .recharts-wrapper,
+.gait-cycle-card .recharts-surface {
+  overflow: visible;
+}
+
+.gait-cycle-card .recharts-tooltip-wrapper {
+  z-index: 9999 !important;
+}

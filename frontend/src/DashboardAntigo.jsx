@@ -364,6 +364,39 @@ function juntarSeriesTemporais(
   );
 }
 
+function prepararCiclosPassada(ciclos) {
+  if (!Array.isArray(ciclos)) return [];
+
+  const dadosPorIndice = {};
+
+  ciclos.forEach((ponto) => {
+    const indice = Number(ponto.indice);
+    const angulo = Number(ponto.angulo_normalizado);
+    const ciclo = ponto.ciclo_passada;
+
+    if (
+      Number.isNaN(indice) ||
+      Number.isNaN(angulo) ||
+      ciclo === undefined ||
+      ciclo === null
+    ) {
+      return;
+    }
+
+    if (!dadosPorIndice[indice]) {
+      dadosPorIndice[indice] = {
+        indice: indice,
+      };
+    }
+
+    dadosPorIndice[indice][`ciclo_${ciclo}`] = angulo;
+  });
+
+  return Object.values(dadosPorIndice).sort(
+    (a, b) => a.indice - b.indice
+  );
+}
+
 function App() {
   const fileInputRef = useRef(null);
   const comparisonInputRef = useRef(null);
@@ -406,6 +439,23 @@ function App() {
     observacoes,
     setObservacoes,
   } = useDashboard();
+
+  const ciclosPassada = resultado?.ciclos_passada ?? [];
+
+  const dadosCiclosPassada =
+    prepararCiclosPassada(ciclosPassada);
+
+  const ciclosUnicos = Array.from(
+    new Set(
+      ciclosPassada
+        .map((ponto) => ponto.ciclo_passada)
+        .filter((ciclo) => ciclo !== undefined && ciclo !== null)
+    )
+  );
+
+  //console.log("ciclosPassada", ciclosPassada);
+  //console.log("dadosCiclosPassada", dadosCiclosPassada);
+  //console.log("ciclosUnicos", ciclosUnicos);
 
   const [exportando, setExportando] = useState(false);
 
@@ -1118,6 +1168,117 @@ function App() {
                 </div>
               </section>
             
+            {/* Ciclo da passada */}
+                  {dadosCiclosPassada.length > 0 && (
+                    <section className="charts-section gait-cycle-section">
+                      <div className="gait-cycle-header-card">
+                        <div className="section-heading">
+                          <div>
+                            <span className="section-kicker">
+                              Ciclo da passada
+                            </span>
+
+                            <h2>Análise do ciclo da passada</h2>
+                          </div>
+
+                          <p>
+                            Sobreposição dos ciclos de passada normalizados de 0 a 100%,
+                            permitindo visualizar a repetibilidade do movimento do joelho
+                            ao longo da coleta.
+                          </p>
+                        </div>
+                      </div>
+                    
+                      <article className="chart-card chart-card-wide gait-cycle-card">
+                        <div className="chart-header gait-cycle-chart-header">
+                          <div>
+                            <h3>Ciclos de passada sobrepostos</h3>
+
+                            <p>
+                              Cada linha representa uma passada identificada durante a coleta.
+                              O eixo X mostra o ciclo da marcha normalizado de 0 a 100%.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="gait-cycle-chart-container">
+                          <ResponsiveContainer width="100%" height={420}>
+                            <LineChart
+                              data={dadosCiclosPassada}
+                              margin={{
+                                top: 24,
+                                right: 36,
+                                bottom: 54,
+                                left: 28,
+                              }}
+                            >
+                              <CartesianGrid
+                                strokeDasharray="4 4"
+                                stroke="rgba(100, 116, 139, 0.28)"
+                              />
+
+                              <XAxis
+                                dataKey="indice"
+                                tickMargin={10}
+                                label={{
+                                  value: "Ciclo da marcha (%)",
+                                  position: "bottom",
+                                  offset: 28,
+                                }}
+                              />
+
+                              <YAxis
+                                width={58}
+                                tickFormatter={(valor) => `${valor}°`}
+                              />
+
+                              <Tooltip
+                                wrapperStyle={{
+                                  zIndex: 9999,
+                                  pointerEvents: "none",
+                                }}
+                                contentStyle={{
+                                  borderRadius: "14px",
+                                  border: "1px solid rgba(148, 163, 184, 0.35)",
+                                  boxShadow: "0 18px 40px rgba(15, 23, 42, 0.24)",
+                                }}
+                                formatter={(valor, nome) => [
+                                  `${Number(valor).toFixed(2)}°`,
+                                  nome,
+                                ]}
+                                labelFormatter={(valor) =>
+                                  `Ciclo da marcha: ${valor}%`
+                                }
+                              />
+
+                              <Legend
+                                verticalAlign="bottom"
+                                align="center"
+                                height={46}
+                                wrapperStyle={{
+                                  paddingTop: "90px",
+                                }}
+                              />
+
+                              {ciclosUnicos.map((ciclo, index) => (
+                                <Line
+                                  key={ciclo}
+                                  type="monotone"
+                                  dataKey={`ciclo_${ciclo}`}
+                                  name={`Ciclo ${ciclo}`}
+                                  dot={false}
+                                  strokeWidth={2}
+                                  stroke={`hsl(${index * 28}, 70%, 58%)`}
+                                  connectNulls
+                                  isAnimationActive={false}
+                                />
+                              ))}
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </article>
+                    </section>
+                  )}
 
               {/* Gráficos */}
               <section className="charts-section">
@@ -1375,7 +1536,7 @@ function App() {
                                 type="monotone"
                                 dataKey="jerkCoxaPrincipal"
                                 name={nomeColetaPrincipal}
-                                stroke="#818cf8"
+                                stroke="#e6b95c"
                                 strokeWidth={2}
                                 dot={false}
                                 connectNulls
@@ -1473,7 +1634,7 @@ function App() {
                                 type="monotone"
                                 dataKey="jerkPernaPrincipal"
                                 name={nomeColetaPrincipal}
-                                stroke="#e98072"
+                                stroke="#e6b95c"
                                 strokeWidth={2}
                                 dot={false}
                                 connectNulls
@@ -1485,7 +1646,7 @@ function App() {
                                   type="monotone"
                                   dataKey="jerkPernaComparacao"
                                   name={nomeColetaComparativa}
-                                  stroke="#c68d2f"
+                                  stroke="#22a6a1"
                                   strokeWidth={2}
                                   dot={false}
                                   connectNulls
@@ -1698,9 +1859,11 @@ function App() {
                   )}
                   </div>
                   </section>
+
+            
                 
                 {/* Resumo descritivo da coleta */}
-              <section className="collection-summary-section">
+              {/* <section className="collection-summary-section">
                 <div className="summary-heading">
                   <div>
                     <p className="summary-eyebrow">Leitura geral</p>
@@ -1752,7 +1915,7 @@ function App() {
                     </div>
                   </article>
                 </div>
-              </section>
+              </section> */}
 
               {/* Comparação entre duas coletas */}
               <section className="comparison-section">
