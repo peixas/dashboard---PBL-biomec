@@ -44,6 +44,23 @@ async def upload_csv(file: UploadFile = File(...)):
         # Converte o conteúdo em um DataFrame
         dataframe = pd.read_csv(BytesIO(content))
 
+        # Novo gráfico do ciclo da passada
+        colunas_ciclo_passada = [
+            "indice",
+            "angulo_normalizado",
+            "ciclo_passada",
+        ]
+
+        if all(coluna in dataframe.columns for coluna in colunas_ciclo_passada):
+            ciclos_passada = (
+                dataframe[colunas_ciclo_passada]
+                .dropna()
+                .to_dict(orient="records")
+            )
+        else:
+            ciclos_passada = []
+
+
         # Calcula o resumo geral da coleta e do ângulo do joelho
         collection_summary = calculate_collection_summary(dataframe)
 
@@ -62,6 +79,7 @@ async def upload_csv(file: UploadFile = File(...)):
             "jerk_summary": jerk_summary,
             "time_series": time_series,
             "start_end_comparison": start_end_comparison,
+            "ciclos_passada": ciclos_passada,
         }
 
     except HTTPException:
